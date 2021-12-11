@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Ubuntu:wght@400;500&display=swap");
+
 *,
 *::after,
 *::before {
@@ -11,16 +13,16 @@ html {
 }
 :root {
   /* fonts */
-  --heading-fonts: "Spectral", serif;
-  --body-font: "Karla", sans-serif;
+  --heading-fonts: "Roboto", sans-serif;
+  --body-fonts: "Ubuntu", sans-serif;
   --small-text: 0.75rem;
-  --bold-text: 600;
+  --bold-text: 500;
   /* colors*/
   --light-black: #16161a;
   --dark-black: #010101;
   --white: #fffffe;
   --light-gray: #94a1b2;
-  --dark-gray: #72757e;
+  --lighter-black: #2d2d31;
   --purple: #7f5af0;
   --green: #2cb67d;
   --red-300: #fca5a5;
@@ -34,7 +36,7 @@ html {
   --border-clr: var(--dark-black);
   --highlight: var(--purple);
   --link-clr: var(--green);
-  --secondary-clr: var(--dark-gray);
+  --secondary-clr: var(--lighter-black);
   --error-clr: var(--red-300);
   --error-bg-clr: var(--red-700);
   --success-clr: var(--white);
@@ -45,8 +47,9 @@ html {
   --max-width: 1200px;
   --fixed-width: 600px;
   /* box shadow  */
-  --shadow-1: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-2: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-1: 0 1px 2px 0 rgba(248, 248, 248, 0.15);
+  --shadow-2: 0 1px 3px 0 rgba(248, 248, 248, 0.15),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
   --shadow-3: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-4: 0 10px 15px -3px rgba(0, 0, 0, 0.1),

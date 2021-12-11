@@ -1,0 +1,10 @@
+.logo {
+  text-shadow: 1.5px 1.5px rgba(248, 248, 248, 0.1);
+  margin: 0;
+}
+.logo span {
+  color: var(--btn-bg-clr);
+}
+.sidebar .logo {
+  margin-bottom: 3rem;
+}
