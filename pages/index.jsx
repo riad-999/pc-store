@@ -1,8 +1,9 @@
 import Head from 'next/head';
-import { HomeMainSection, Navbar } from '../components';
-import Sidebar from '../components/sidebar';
+import { FeaturedProducts, HomeCards, HomeMainSection, Navbar, Sidebar, Footer } from '../components';
+import { featuredProductsUrl as url } from '../utils/constants';
+import axios from 'axios';
 
-export default function Home() {
+export default function Home({featuredProducts}) {
   return (
     <div>
       <Head>
@@ -13,6 +14,27 @@ export default function Home() {
       <Navbar />
       <Sidebar />
       <HomeMainSection />
+      <FeaturedProducts products={featuredProducts}/>
+      <HomeCards />
+      <Footer />
     </div>
   );
+}
+
+export const getServerSideProps = async () => {
+  try {
+      const response = await axios(url);
+      const featuredProducts = response.data.data;
+      return {
+          props: {
+              featuredProducts
+          }
+      }
+  } catch (error) {
+      return {
+          props: {
+              featuredProducts: null
+          }
+      }
+  }
 }

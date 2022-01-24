@@ -13,7 +13,7 @@ const HomeMainSection = () => {
                     consequuntur! Voluptatum similique suscipit minus!.
                 </p>
                 <Link href="/prosucts/index">
-                    <button type="button" class="btn btn--big">
+                    <button type="button" className="btn btn--big">
                         <a>go shoping</a>
                     </button>
                 </Link>

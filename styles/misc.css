@@ -8,3 +8,6 @@
 .sidebar .logo {
   margin-bottom: 3rem;
 }
+.hero div {
+  width: min(90%, var(--max-width));
+}

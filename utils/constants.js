@@ -12,8 +12,12 @@ const links = [
     {
         id : 3,
         name : 'products',
-        path : '/products/index'
+    path : '/products'
     }
 ];
 
-export {links}
+const productsUrl = 'http://localhost:8000/api/products';
+const featuredProductsUrl = 'http://localhost:8000/api/featuredproducts';
+const shippingFee = 550;
+
+export {links,productsUrl,featuredProductsUrl,shippingFee};

@@ -1,0 +1,61 @@
+.main-filters {
+  padding-bottom: 2rem;
+  border-bottom: solid 1px var(--secondary-clr);
+}
+.search {
+  display: flex;
+}
+.search__input {
+  display: block;
+  width: 50%;
+  padding: 0.5rem;
+}
+.search__input:focus {
+  outline-color: var(--btn-bg-clr);
+}
+.search {
+  margin-bottom: 2rem;
+}
+.sub-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+  background-color: var(--secondary-clr);
+  border-radius: var(--border-radius);
+}
+@media all and (min-width: 1200px) {
+  .sub-filters {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.category {
+  display: block;
+  will-change: color;
+  transition: color 0.4s;
+}
+.category:hover {
+  color: var(--green);
+}
+.current-price {
+  color: var(--green);
+}
+#shippment {
+  cursor: pointer;
+}
+.selected {
+  color: var(--green);
+}
+.form__row--2-col {
+  display: flex;
+  justify-content: space-between;
+}
+
+.child-60 {
+  flex-basis: 60%;
+}
+.child-40 {
+  flex-basis: 30%;
+}

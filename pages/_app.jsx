@@ -5,13 +5,18 @@ import '../styles/interactive.css';
 import '../styles/form.css';
 import '../styles/misc.css';
 import { UIProvider } from '../contexts/UIConttext';
-// import Head from "next/head"
+import { CartProvider} from '../contexts/cartContext';
+import { FilterProvider } from '../contexts/filterContext';
 
 function MyApp({ Component, pageProps }) {
   return (
-  <UIProvider>
-    <Component {...pageProps} />
-  </UIProvider>
+    <UIProvider>
+      <FilterProvider>
+        <CartProvider>
+          <Component {...pageProps} />
+        </CartProvider>
+      </FilterProvider>
+    </UIProvider>
   );
 }
 
