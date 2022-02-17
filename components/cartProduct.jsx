@@ -2,8 +2,10 @@ import { BsFillTrashFill } from 'react-icons/bs';
 import Image from 'next/image';
 import { CartCount } from '.';
 import { toPrice } from '../utils/helpers';
+import { useCartContext } from '../contexts/cartContext';
 
-const CartProduct = ({name,price,quantity,images}) => {
+const CartProduct = ({id,name,price,quantity,images,max}) => {
+    const { removeProduct } = useCartContext();
     return (
         <article className='cart__product'>
             <div className='cart__image'>
@@ -17,12 +19,12 @@ const CartProduct = ({name,price,quantity,images}) => {
                 ${toPrice(price)}
             </div>
             <div>
-                <CartCount />
+                <CartCount quantity={quantity} id={id} max={max}/>
             </div>
             <div className='green opt'>
                 ${toPrice(quantity * price)}
             </div>
-            <button type="button" className='red cart__remove'>
+            <button type="button" className='red cart__remove' onClick={() => removeProduct(id)}>
                 <BsFillTrashFill />
             </button>
         </article>

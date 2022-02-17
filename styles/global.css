@@ -45,7 +45,7 @@ html {
   /* rest of variables */
   --border-radius: 0.25rem;
   --letter-spacing: 1px;
-  --max-width: 1200px;
+  --max-width: 1300px;
   --fixed-width: 600px;
   /* box shadow  */
   --shadow-1: 0 1px 2px 0 rgba(248, 248, 248, 0.15);
@@ -174,12 +174,10 @@ button {
   display: block;
   margin: 0 auto;
 }
-.btn:hover,
-.btn:focus {
+.btn:hover {
   color: var(--btn-bg-clr);
   background-color: var(--btn-color);
 }
-.btn--transp:focus,
 .btn--transp:hover {
   background-color: inherit;
   color: white;

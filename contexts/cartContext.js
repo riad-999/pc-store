@@ -2,25 +2,28 @@ import { useEffect, useState, useReducer, useContext, createContext } from "reac
 import reducer from "../reducers/cartReducer";
 import { shippingFee } from "../utils/constants";
 import {
-    ADD_TO_CART
+    ADD_TO_CART,
+    ALTER_QUANTITY,
+    REMOVE_PRODUCT,
+    CLEAR_CART
 } from "../utils/actions";
 import { isOnServer } from '../utils/helpers';
-
+import { BsDisplay } from "react-icons/bs";
+const init = {
+    cart: [],
+    totalItems: 0,
+    totalAmount: 0,
+    shippingFee
+};
 const getCart = () => {
     if(isOnServer())
-        return {};
+        return init;
     if(localStorage.getItem('cart'))
         return JSON.parse(localStorage.getItem('cart'));
-    return {
-        cart: [],
-        totalItems: 0,
-        totalAmount: 0,
-        shippingFee
-    };
+    return init;
 }
 
 const initialState = getCart();
-console.log(initialState);
 const cartContext = createContext();
 
 export const CartProvider = ({children}) => {
@@ -28,15 +31,25 @@ export const CartProvider = ({children}) => {
     useEffect(() => {
         localStorage.setItem('cart',JSON.stringify(state));
     },[state.cart]);
-    const addToCart = (product) => {
-        // check if the products already exists 
-        const exist = state.cart.find(prdct => prdct.id == product.id);
-        if(!exist)
-            dispatch({type: ADD_TO_CART, payload:product });
+
+    const addToCart = (product,quantity) => {
+        dispatch({type: ADD_TO_CART, payload:{product, quantity}});
+    }
+    const alter_product_quantity = (id,flag) => {
+        dispatch({type:ALTER_QUANTITY,payload: {id,flag}});
+    }
+    const removeProduct = (id) => {
+        dispatch({type:REMOVE_PRODUCT,payload:id});
+    }
+    const clearCart = () => {
+        dispatch({type: CLEAR_CART});
     }
 
     return <cartContext.Provider value={{
         addToCart,
+        alter_product_quantity,
+        removeProduct,
+        clearCart,
         ...state
     }}>
         {children}

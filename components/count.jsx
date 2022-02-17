@@ -6,17 +6,26 @@ import { BsFillCartPlusFill } from 'react-icons/bs';
 import { useCartContext } from "../contexts/cartContext";
 
 const Count = ({product}) => {
+    const {quantity,id} = product;
     const [count,setCount] = useState(1);
     const {addToCart} = useCartContext();
 
+    const increase = () => {
+        if(count < quantity)
+            setCount(count + 1);
+    }
+    const decrease = () => {
+        if(count > 1)
+            setCount(count - 1);
+    }
     return(
         <>
             <section className="count">
-                <button type="button" className="">
+                <button type="button" onClick={decrease}>
                     <AiOutlineMinus />
                 </button>
                 <h3>{count}</h3>
-                <button type="button">
+                <button type="button" onClick={increase}>
                     <AiOutlinePlus />
                 </button>
             </section>
@@ -25,7 +34,7 @@ const Count = ({product}) => {
                     <a>proceed checkout</a>
                 </Link>
             </button>
-            <button type="button" className="btn ml-1" onClick={() => addToCart(product)}>
+            <button type="button" className="btn ml-1" onClick={() => addToCart(product,count)}>
                     <BsFillCartPlusFill />
             </button>
         </>

@@ -1,7 +1,12 @@
 import { BiSearch } from 'react-icons/bi';
 import { AiOutlineArrowDown } from 'react-icons/ai';
+import { useFilterContext } from '../contexts/filterContext';
+import { toPrice } from '../utils/helpers';
 
 const MainFilters = () => {
+    const {setSort,products,clearFilters,changeFilters,filters,filters: {price,maxPrice,minPrice}} = useFilterContext();
+    const set = new Set(products.map(products => products.category));
+    const categories = [...set];
     return (
         <section className="main-filters">
             <form className="search">
@@ -16,18 +21,22 @@ const MainFilters = () => {
             <section className="sub-filters">
                 <div className='categories'>
                     <h4>Categories</h4>
-                    <button type="button" className='category selected btn btn--transp'>
+                    <button type="button" className={filters.category === 'all' ? `category btn btn--transp selected` : `category btn btn--transp`}
+                     onClick={() => changeFilters('category','all')}>
                         All
                     </button>
-                    <button type="button" className='category btn btn--transp'>
-                        cpu
-                    </button>
-                    <button type="button" className='category btn btn--transp'>
-                        graphics card
-                    </button>
-                    <button type="button" className='category btn btn--transp'>
-                        pereferals
-                    </button>
+                    {   
+                        categories.map((category,index) => {
+                            const currentCategory = filters.category;
+                            console.log(currentCategory);
+                            return (
+                            <button key={index} type="button" className={currentCategory === category ? `category btn btn--transp selected` : `category btn btn--transp`}
+                             onClick={() => changeFilters('category',category)}>
+                                {category}
+                            </button>
+                        );
+                        })
+                    }
                 </div>
                 <div className='2nd-filters'>
                     <div className='form__row'>
@@ -46,8 +55,9 @@ const MainFilters = () => {
                         <label className='form__label' htmlFor="price">
                             Price:
                         </label>
-                        <div className='current-price'>$399</div>
-                        <input type="range" id="price"/>
+                        <div className='current-price'>${toPrice(price)}</div>
+                        <input type="range" step='4000' value={price} max={maxPrice} min={minPrice} 
+                        onChange={event => changeFilters('price',event.currentTarget.value)}/>
                     </div>
                     <div className='form__row'>
                         <label htmlFor="shippment" className='form__label'>
@@ -60,14 +70,15 @@ const MainFilters = () => {
                         <label htmlFor='sort' className='form__label'>
                             sort by:
                         </label>
-                        <select id="sort">
-                            <option>ascending (price)</option>
-                            <option>decending (price)</option>
-                            <option>from A-Z</option>
-                            <option>from Z-A</option>
+                        <select onChange={event => setSort(event.currentTarget.value)}>
+                            <option value="score">score</option>
+                            <option value="asc-price">ascending (price)</option>
+                            <option value="desc-price">decending (price)</option>
+                            <option value="A-Z">from A-Z</option>
+                            <option value="Z-A">from Z-A</option>
                         </select>
                     </div>
-                    <button type="button" className='btn btn--red mt-2'>
+                    <button type="button" className='btn btn--red mt-2' onClick={clearFilters}>
                         reset filters
                     </button>
                 </div>

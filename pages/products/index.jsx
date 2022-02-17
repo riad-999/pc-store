@@ -5,7 +5,7 @@ import { useFilterContext } from "../../contexts/filterContext";
 import { useEffect } from "react";
 
 const Products = ({products}) => {
-    const {setProducts} = useFilterContext();
+    const {setProducts,filteredProducts} = useFilterContext();
     useEffect(() => {
         setProducts(products);
     },[]);
@@ -15,7 +15,7 @@ const Products = ({products}) => {
             <Sidebar />
             <main className="main-content">
                 <MainFilters />
-                <ProductsSection products={products}/>
+                <ProductsSection products={filteredProducts}/>
             </main>
             <BackTotopBtn />
         </>
