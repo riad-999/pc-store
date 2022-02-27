@@ -81,10 +81,13 @@ export const reducer = (state,action) => {
         };
     }
     if(action.type === FILTER_PRODUCTS) { 
-        const {category,price} = state.filters;
+        const {category,price,search} = state.filters;
         let filteredProducts = [...state.products];
         if(category !== 'all') {
             filteredProducts = filteredProducts.filter(product => product.category === category);
+        }
+        if(search) {
+            filteredProducts = filteredProducts.filter(product => product.name.includes(search));
         }
         filteredProducts = filteredProducts.filter(product => product.price <= price);
         return {

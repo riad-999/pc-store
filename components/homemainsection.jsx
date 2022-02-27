@@ -12,7 +12,7 @@ const HomeMainSection = () => {
                     tempore quisquam explicabo doloribus aperiam quidem sapiente
                     consequuntur! Voluptatum similique suscipit minus!.
                 </p>
-                <Link href="/prosucts/index">
+                <Link href="/products" passHref>
                     <button type="button" className="btn btn--big">
                         <a>go shoping</a>
                     </button>

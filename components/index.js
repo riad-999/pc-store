@@ -18,6 +18,13 @@ import CartProduct from './cartProduct';
 import CartFooter from './cartFooter';
 import Feedback from './feedback';
 import Review from './review';
+import Loading from './loading';
+import Alert from './alert';
+import CheckoutForm from './checkoutFrom';
+import Error from './error';
+import Layout from './layout';
+import AddressForm from './addressForm';
+import ShowBill from './showBill';
 
 export {
     Navbar,
@@ -39,5 +46,12 @@ export {
     CartProduct,
     CartFooter,
     Feedback,
-    Review
+    Review,
+    Loading,
+    Alert,
+    CheckoutForm,
+    Error,
+    Layout,
+    AddressForm,
+    ShowBill
 };

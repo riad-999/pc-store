@@ -8,7 +8,7 @@ import {
     CLEAR_CART
 } from "../utils/actions";
 import { isOnServer } from '../utils/helpers';
-import { BsDisplay } from "react-icons/bs";
+
 const init = {
     cart: [],
     totalItems: 0,

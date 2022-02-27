@@ -15,7 +15,13 @@ const Products = ({products}) => {
             <Sidebar />
             <main className="main-content">
                 <MainFilters />
-                <ProductsSection products={filteredProducts}/>
+                {
+                    !filteredProducts.length ? 
+                    <div className="center mt-5">
+                        <h4>sorry, No matching products for your filters.</h4>
+                    </div> : 
+                    <ProductsSection products={filteredProducts}/>
+                }
             </main>
             <BackTotopBtn />
         </>
@@ -32,6 +38,7 @@ export const getServerSideProps = async () => {
             }
         }
     } catch (error) {
+        console.log(error);
         return {
             props: {
                 products: []

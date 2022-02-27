@@ -3,14 +3,16 @@ import Image from 'next/image';
 import { CartCount } from '.';
 import { toPrice } from '../utils/helpers';
 import { useCartContext } from '../contexts/cartContext';
+import { imagesUrl } from '../utils/constants';
 
 const CartProduct = ({id,name,price,quantity,images,max}) => {
     const { removeProduct } = useCartContext();
+    const image = images.main; 
     return (
         <article className='cart__product'>
             <div className='cart__image'>
                 <div className='cart__product__image-wrapper'>
-                    <Image src="/images/home.jpg" alt="product image" layout='fill' objectFit='cover' />
+                    <Image src={`${imagesUrl}/${image}`} alt="product image" layout='fill' objectFit='cover' />
                 </div>
                 <h5>{name}</h5>
                 <h5 className='green mob'>${price}</h5>

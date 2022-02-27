@@ -4,10 +4,11 @@
 }
 .search {
   display: flex;
+  width: min(95%, var(--fixed-width));
 }
 .search__input {
   display: block;
-  width: 50%;
+  width: min(95%, var(--fixed-width));
   padding: 0.5rem;
 }
 .search__input:focus {
@@ -17,12 +18,16 @@
   margin-bottom: 2rem;
 }
 .sub-filters {
+  width: min(95%, var(--fixed-width));
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
   padding: 1rem;
   background-color: var(--secondary-clr);
   border-radius: var(--border-radius);
+}
+.no-height {
+  display: none;
 }
 @media all and (min-width: 1200px) {
   .sub-filters {

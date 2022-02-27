@@ -57,7 +57,6 @@
   margin: 0 auto 2rem;
 }
 .product {
-  position: relative;
   background-color: var(--secondary-clr);
   border-radius: var(--border-radius);
 }
@@ -75,14 +74,11 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
-.product:hover .more {
-  z-index: 10;
-}
 .product__img {
   display: block;
   width: 100%;
   position: relative;
-  height: 300px;
+  height: 250px;
   border-radius: var(--border-radius);
 }
 .featured {

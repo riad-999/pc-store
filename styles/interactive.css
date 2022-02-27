@@ -65,6 +65,9 @@
 .cart__remove {
   font-size: 1.3333rem;
 }
+.hide {
+  visibility: hidden;
+}
 @media all and (min-width: 1200px) {
   .sidebar__show {
     display: none;

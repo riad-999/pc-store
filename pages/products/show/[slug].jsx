@@ -2,11 +2,14 @@ import { Count, Navbar, Sidebar, Review, Feedback } from "../../../components";
 import Image from "next/image";
 import { productsUrl } from "../../../utils/constants";
 import axios from "axios";
+import { imagesUrl } from "../../../utils/constants";
+import { useState } from "react";
 
 const SingleProduct = ({product}) => {
     const {description,price,name,images,score,sold,comments,total_reviews,quantity} = product;
     let converted = price / 100;
     converted = converted.toFixed(2);
+    const [currentImage,setCurrentImage] = useState(images.main);
     return (   
         <>
             <Navbar />
@@ -15,21 +18,21 @@ const SingleProduct = ({product}) => {
                 <section className="single-product">
                     <div className="images">
                         <div className="current-image__wrapper">
-                            <Image src={`/images/${images.main}`} alt="products image" objectFit="cover" layout="fill" />
+                            <Image src={`${imagesUrl}/${currentImage}`} alt="products image" objectFit="cover" layout="fill" />
                         </div>
                         <div className="other-images">
-                            <button type="button" className="image__wrapper">
-                                <Image src="/images/home.jpg" alt="product image" objectFit="cover" layout="fill" />
+                            <button type="button" className={currentImage === images.main ? "image__wrapper outline" : "image__wrapper"}>
+                                <Image src={`${imagesUrl}/${images.main}`} onClick={() => setCurrentImage(images.main)} alt="product image" objectFit="cover" layout="fill" />
                             </button>
-                            <button type="button" className="image__wrapper">
-                                <Image src="/images/home.jpg" alt="product image" objectFit="cover" layout="fill" />
-                            </button>
-                            <button type="button" className="image__wrapper">
-                                <Image src="/images/home.jpg" alt="product image" objectFit="cover" layout="fill" />
-                            </button>
-                            <button type="button" className="image__wrapper">
-                                <Image src="/images/home.jpg" alt="product image" objectFit="cover" layout="fill" />
-                            </button>
+                            {
+                                images.others.map((image,index) => {
+                                    return(
+                                        <button type="button" key={index} className={currentImage === image ? "image__wrapper outline" : "image__wrapper"} onClick={() => setCurrentImage(image)}>
+                                            <Image src={`${imagesUrl}/${image}`} alt="product image" objectFit="cover" layout="fill" />
+                                        </button>
+                                    );
+                                })
+                            }
                         </div>
                     </div>
                     <div className="single-product__info">
@@ -79,13 +82,13 @@ export const getServerSideProps = async (context) => {
             props: {
                 product
             }
-        }
+        };
     } catch (error) {
         return {
-            props: {
+            props:{
                 product: null
-            }
-        }
+            },
+        };
     }
 }
 

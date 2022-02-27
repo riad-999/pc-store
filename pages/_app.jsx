@@ -4,6 +4,8 @@ import '../styles/layout.css';
 import '../styles/interactive.css';
 import '../styles/form.css';
 import '../styles/misc.css';
+import '../styles/stripe.css';
+
 import { UIProvider } from '../contexts/UIConttext';
 import { CartProvider} from '../contexts/cartContext';
 import { FilterProvider } from '../contexts/filterContext';

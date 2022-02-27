@@ -5,7 +5,7 @@ import { useCartContext } from "../contexts/cartContext";
 const CartBtn = () => {
     const {totalItems} = useCartContext();
     return (
-        <Link href="/cart">
+        <Link href="/cart" passHref>
             <button type="button" className="cart">
                 <a><FaShoppingCart/></a>
                 <div className="cart__count">{totalItems}</div>

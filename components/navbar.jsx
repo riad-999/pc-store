@@ -6,7 +6,7 @@ import { Auth, CartBtn } from ".";
 import { UseUIContext } from "../contexts/UIConttext";
 
 const Navbar = () => {
-    const {openSidebar} = UseUIContext();
+    const {openSidebar,logout} = UseUIContext();
 
     return (
         <header className="main-header">

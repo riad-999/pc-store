@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Hero = (props) => {
     const {title, path} = props;
     if(path === 'products'){

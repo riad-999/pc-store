@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { AiOutlinePlus } from 'react-icons/ai';
 import { AiOutlineMinus } from 'react-icons/ai';
@@ -9,6 +9,7 @@ const Count = ({product}) => {
     const {quantity,id} = product;
     const [count,setCount] = useState(1);
     const {addToCart} = useCartContext();
+    const router = useRouter();
 
     const increase = () => {
         if(count < quantity)
@@ -29,10 +30,11 @@ const Count = ({product}) => {
                     <AiOutlinePlus />
                 </button>
             </section>
-            <button type="button" className="btn">
-                <Link href="/chekout">
-                    <a>proceed checkout</a>
-                </Link>
+            <button type="button" className="btn" onClick={() => {
+                addToCart(product,count);
+                router.push('/checkout');
+            }}>
+                proceed checkout
             </button>
             <button type="button" className="btn ml-1" onClick={() => addToCart(product,count)}>
                     <BsFillCartPlusFill />
