@@ -25,6 +25,10 @@ import Error from './error';
 import Layout from './layout';
 import AddressForm from './addressForm';
 import ShowBill from './showBill';
+import OrderTableHeader from './orderTableHeader';
+import TableOrder from './tableOrder';
+import TableProductHeader from './tableProductHeader';
+import TableProduct from './tableProduct';
 
 export {
     Navbar,
@@ -53,5 +57,9 @@ export {
     Error,
     Layout,
     AddressForm,
-    ShowBill
+    ShowBill,
+    OrderTableHeader,
+    TableOrder,
+    TableProductHeader,
+    TableProduct
 };
