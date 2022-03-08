@@ -1,7 +1,7 @@
 import { useState, useEffect} from "react";
 import axios from "axios";
 
-const useFetch = (url, method, Data = null, withCredentials = true) => {
+const useFetch = (url, method = 'get', Data = null, withCredentials = true) => {
     const [loading,setLoading] = useState(true);
     const [error,setError] = useState(null);
     const [data,setData] = useState(null);
@@ -34,16 +34,30 @@ const useFetch = (url, method, Data = null, withCredentials = true) => {
             setData(response);
         } catch (err) {
             if(!err.response)
-                setError({type: 'network',response: null});
+                setError({
+                    type: 'network',
+                    message: 'network error refresh the page or try later' ,
+                    response: null
+                });
             else {
-                setError({type: 'normal',response: err.response});
+                if(err.response.status == 401)
+                    setError({
+                        type: 'unauthorized',
+                        message: 'your not autorized/authenticated to access this content',
+                        response: err.response
+                    });
+                else
+                    setError({
+                        type: 'other',
+                        message: 'somthing went wrong',
+                        response: err.response
+                    });
             }
         }
         setLoading(false);
     }
 
     useEffect(() => {
-        console.log('pish');
         getData();
     },[]);
     return {loading,error,data};

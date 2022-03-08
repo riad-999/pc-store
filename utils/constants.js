@@ -28,6 +28,7 @@ export const handleOrderUrl = 'http://localhost:8000/api/handleOrder';
 export const cancelOrderUrl = 'http://localhost:8000/api/cancelOrder';
 export const checkAddressUrl = 'http://localhost:8000/api/checkAddress';
 export const csrfUrl = 'http://localhost:8000/sanctum/csrf-cookie';
+export const ordersUrl = 'http://localhost:8000/api/orders';
 export const PublicStripeKey = 'pk_test_51JqxaPBINvQh3CaAv2mm2adtPReOBKKA4iOSSiTer9RT7rqb2O9HvQ6qEaIpHyK2mIqX9nsFyD6y9ZuYEDfMqpaX00mvrR3ezD';
 const shippingFee = 1000;
 

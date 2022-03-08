@@ -29,6 +29,7 @@ import OrderTableHeader from './orderTableHeader';
 import TableOrder from './tableOrder';
 import TableProductHeader from './tableProductHeader';
 import TableProduct from './tableProduct';
+import ProductInputs from './productsInputs';
 
 export {
     Navbar,
@@ -61,5 +62,6 @@ export {
     OrderTableHeader,
     TableOrder,
     TableProductHeader,
-    TableProduct
+    TableProduct,
+    ProductInputs
 };

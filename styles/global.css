@@ -330,6 +330,16 @@ button {
   margin: 0 auto;
   z-index: 9999;
 }
+.w-110p {
+  width: 110px;
+  display: inline-block;
+}
+.white {
+  color: var(--white);
+}
+.pointer {
+  cursor: pointer;
+}
 @media screen and (min-width: 1200px) {
   .form {
     padding-left: 2.5rem;
