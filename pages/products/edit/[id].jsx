@@ -1,9 +1,12 @@
-import {useState, useRef} from 'react';
-import { Layout,Error,ProductInputs, Loading } from "../../components";
-import { request } from "../../utils";
-import { createProductUrl, storeSessionUrl } from '../../utils/constants';
+import {useState, useRef, useEffect} from 'react';
+import { Layout,Error,ProductInputs, Loading } from "../../../components";
+import { request } from "../../../utils";
+import {useRouter} from 'next/router';
+import { UseUIContext } from '../../../contexts/UIConttext';
+import { storeSessionUrl, imagesUrl, productsUrl, updateProductUrl } from '../../../utils/constants';
+import axios from 'axios';
 
-const Create = () => {
+const Edit = () => {
     const initProductState = {
         name: '',
         price: '',
@@ -18,11 +21,11 @@ const Create = () => {
         ...initProductState,
         category: null
     };
-    // global states
-    // const {isAdmin} = UseUIContext();
+    const {isAdmin} = UseUIContext();
+    const router = useRouter();
     // states
     const [message,setMessage] = useState(null);
-    const [loading,setLoading] = useState(false);
+    const [loading,setLoading] = useState(true);
     const [error,setError] = useState(null);
     const [inputsError,setInputsError] = useState(errorsInitSate);
     const [productInputs,setProductInputs] = useState(initProductState);
@@ -69,6 +72,7 @@ const Create = () => {
     }
     const handleFailure = (response) => {
         if(response) {
+            console.log(response);
             if(response.status === 422) {
                 setInputsError({...response.data.errors});
             }
@@ -84,6 +88,7 @@ const Create = () => {
         }
     }
     const handleSubmit = async (e) => {
+        console.log(productInputs);
         e.preventDefault();
         setLoading(true);
         setMessage(null);
@@ -100,16 +105,12 @@ const Create = () => {
                 formData.append(`other${i}`,productInputs.otherImages[i]);
             }
         }
-        // const {success,response} = await request(createProductUrl,'post',{
-        //     ...productInputs,
-        // });
         const {success,response} = await request(storeSessionUrl,'post',productInputs);
         if(success) {
-            // const id = response.data.id;
-            // const {success: succ,response: res} = await request(`${createProductUrl}-images?id=${id}`,'post',formData);
-            const {success: succ,response: res} = await request(createProductUrl,'post',formData);
+            const id = router.query.id;
+            const {success: succ,response: res} = await request(`${updateProductUrl}/${id}`,'put',formData);
             if(succ) {
-                setMessage({type: 'green', content: 'product created'});
+                setMessage({type: 'green', content: 'product updated'});
             }
             else {
                 if(res && res.status === 422) {
@@ -125,6 +126,35 @@ const Create = () => {
         }
         setLoading(false);
     };
+    // utils 
+    const getProduct = async () => {
+        setLoading(true);
+        const {id} = router.query;
+        try {   
+            const response = await axios.get(`${productsUrl}/${id}`,{
+                headers: {Accept: 'application/json'},
+                withCredentials: true
+            });
+            const product = response.data.data;
+            const {name,category,price,quantity,description,featured,images} = product;
+            setProductInputs({
+                name,category,description,quantity,price,featured,mainImage: {},otherImages: {}
+            });
+            mainImage.current.src = `${imagesUrl}/${product.images.main}`;
+            images.others.forEach((image,index) => {
+                otherImages.current[index].src = `${imagesUrl}/${image}`; 
+            });
+        } catch(error) {
+            handleFailure(error);
+        }
+        setLoading(false);
+    }
+    // useEffects 
+    useEffect(() => {
+        if(router.isReady && isAdmin === true) {
+            getProduct();
+        }
+    },[router.isReady,isAdmin]);
 
     if(error){
         return (
@@ -136,7 +166,7 @@ const Create = () => {
         <Layout admin={true}>
             <main className="main-content">
                 <form className="product-form form" onSubmit={handleSubmit}>
-                    <h3 className='center'>create a product</h3>
+                    <h3 className='center'>update product</h3>
                     <ProductInputs handleChange={handleChange} 
                     errors={inputsError} product={productInputs}/>   
 
@@ -160,7 +190,7 @@ const Create = () => {
                         message ? <div className={`center ${message.type}`}>{message.content}</div> : null
                     }
                     <button type="submit" className="btn btn--center btn--big mt-2">
-                        {loading ? <Loading className='loading--small' /> : 'create'}
+                        {loading ? <Loading className='loading--small' /> : 'edit'}
                     </button>
                 </form>
             </main>
@@ -168,4 +198,4 @@ const Create = () => {
     );
 }
 
-export default Create;
+export default Edit;

@@ -1,32 +1,47 @@
-import { Layout } from "../../components";
+import { Layout, Error } from "../../components";
 import { TableOrder, OrderTableHeader } from "../../components";
+import { request } from "../../utils";
 import { ordersUrl } from "../../utils/constants";
-import { useFetch } from "../../utils";
+import { useState,useEffect } from "react";
+import { handleFailure } from "../../utils/helpers";
 import { Loading } from "../../components";
 
 const Orders = () => {
-    const {loading,data,error} = useFetch(ordersUrl);
-    if(loading){
-        return (
-            <Layout>
-                <Loading />
-            </Layout>
-        );
+    const [loading,setLoading] = useState(true);
+    const [orders,setOrders] = useState([]);
+    const [error,setError] = useState(null);
+
+    const getORders = async () => {
+        const {success,response} = await request(ordersUrl);
+        if(!success) {
+            handleFailure(response,setError);
+        }
+        else {
+            setOrders(response.data.orders);
+        }
+        setLoading(false);
     }
+
+    useEffect(() => {
+        getORders();
+    },[]);
+
     if(error) {
         return (
-            <Error message={error.message} />
+            <Error message={error} />
         );
     }
     return (
         <Layout>
             <main className="main-content">
+                {loading ? <Loading /> : 
                 <section className="orders-table">
                     <OrderTableHeader />
                     {
-                        data.data.orders.map(order => <TableOrder key={order.id} {...order}/>)
+                        orders.map(order => <TableOrder key={order.id} {...order}/>)
                     }
                 </section>
+                }
             </main>
         </Layout>
     );

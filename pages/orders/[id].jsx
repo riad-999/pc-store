@@ -1,31 +1,81 @@
 import { TableProduct,TableProductHeader,Layout,Loading,Error } from "../../components";
-import { useFetch } from "../../utils";
-import { ordersUrl } from "../../utils/constants";
+import { ordersUrl, orderDeliverUrl } from "../../utils/constants";
+import { request } from "../../utils";
 import {useRouter} from 'next/router';
+import {useEffect, useState} from 'react';
+import axios from "axios";
 
 const Order = () => {
     const router = useRouter();
-    const {id} = router.query;
-    const {loading,data,error} = useFetch(`${ordersUrl}/${id}`);
-    if(loading){
-        return (
-            <Loading />
-        );
+    const [order,setOrder] = useState(null);
+    const [loading,setLoading] = useState(true);
+    const [error,setError] = useState('');
+    const [deliverLoading,setDeliverLoading] = useState(false);
+    const [delivered,setDelivered] = useState(null);
+
+    const handleFailure = (response) => {
+        if(!response) {
+            setError('network error');
+        } 
+        else {
+            if(response.status === 401) {
+                setError('session exipred, you need to login as admin');
+            }
+            else {
+                console.log(response);
+                setError('unexpected error occured');
+            }
+        }
     }
+    const handleDelivered = async () => {
+        const id = router.query.id;
+        const state = delivered ? 'delivered' : 'undelivered';
+        setDeliverLoading(true);
+        const {success, response} = await request(`${orderDeliverUrl}/${id}?state=${state}`,'put');
+        if(!success) {
+            handleFailure(response);
+        }
+        else {
+            setDelivered(!delivered);
+        }
+        setDeliverLoading(false);
+    }
+    const getOrder = async (id) => {
+        try {
+            const response = await axios.get(`${ordersUrl}/${id}`,{
+                headers: {Accept: 'application/json'},
+                withCredentials: true
+            });
+            setOrder(response.data);
+            setDelivered(response.data.exported);
+            console.log(response.data.exported);
+        } catch (error) {
+            handleFailure(response);
+        }
+        setLoading(false);
+    }
+
+    useEffect(() => {
+        if(router.isReady)
+            getOrder(router.query.id);
+    },[router.isReady]);
+    const {name,phone,address,state,zip} = order ? order.user : {};
+
     if(error) {
         return (
-            <Error message={error.message} />
+            <Error message={error} />
         );
     }
-    const {name,phone,address,state,zip} = data.data.user;
     return (
         <Layout>
             <main className="main-content typical-flex">
-                <section className="products-table">
+                {loading ? <Loading /> : 
+                <>
+                <section className="products-table"> 
                     <h4>ordered products</h4>
                     <TableProductHeader />
                     {
-                        data.data.products.map(product => {
+                        order.products.map(product => {
                             return (
                                 <TableProduct key={product.id} {...product}/>
                             );
@@ -40,7 +90,13 @@ const Order = () => {
                         <div className="mt-1"><span className="w-110p green">address: </span>{address}</div>
                         <div className="mt-1"><span className="w-110p green">state, zip: </span>{state}, {zip}</div>
                     </section>
+                    <button type="button" className="btn mt-2" onClick={handleDelivered}>
+                        {deliverLoading ? <Loading className="loading--small" /> : 
+                        delivered ? 'unmark' : 'mark as delivered'}
+                    </button>
                 </section>
+                </>
+                }
             </main>
         </Layout>
     );

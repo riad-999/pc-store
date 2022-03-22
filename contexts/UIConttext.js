@@ -6,24 +6,22 @@ import {
     AUTHENTICATE,
     LOGOUT,
     SET_ALERT,
+    SET_IS_ADMIN,
     SET_AUTH,
     SET_ERROR,
     SET_USER
 } from '../utils/actions';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { logoutUrl} from '../utils/constants';
+import { authUrl, logoutUrl} from '../utils/constants';
+import { request } from '../utils';
 
 const UIContext = createContext();
-// let user = null;
-
-// if(!isOnServer()) {
-//     user = localStorage.getItem('user') ? localStorage.getItem('user') : null;
-// }
 
 const initialState = {
     isSidebarOpen: false,
     isAuth: null,
+    isAdmin: null,
     error: null,
     alert : {
         type: '',
@@ -59,9 +57,36 @@ export const UIProvider = ({children}) => {
     const setUser = (user) => {
         dispatch({type: SET_USER, payload: user})
     }
+    const setIsAdmin = (isAdmin) => {
+        dispatch({type: SET_IS_ADMIN,payload: isAdmin});
+    }
+    const auth = async () => {
+        const {success,response} = await request(authUrl);
+        if(!success) {
+            if(response) {
+                if(response.status === 401) {
+                    setIsAuth(false);
+                    setIsAdmin(false);
+                }
+            }
+            else {
+                router.push('/error');
+            }
+        }
+        else {
+            setIsAuth(true);
+            if(response.data.isAdmin) {
+                setIsAdmin(true);
+            }
+            else {
+                setIsAdmin(false);
+            }
+        }
+    }
     const logout = async () => {
         try{
             setIsAuth(null);
+            setIsAdmin(null);
             await axios.post(logoutUrl,{},{withCredentials: true});
             dispatch({type: LOGOUT});
         } catch(error) {
@@ -72,7 +97,12 @@ export const UIProvider = ({children}) => {
         }
         router.push('/session/login');
     }
+
     //use effects
+    useEffect(() => {
+        auth();
+    },[]);
+
     return (
         <UIContext.Provider value={
             {
@@ -84,7 +114,8 @@ export const UIProvider = ({children}) => {
                 setAlert,
                 setError,
                 setIsAuth,
-                setUser
+                setUser,
+                setIsAdmin
             }
         }>
             {children}

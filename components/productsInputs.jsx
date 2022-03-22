@@ -1,6 +1,6 @@
 const ProductInputs = (props) => {
     const {handleChange, product, errors} = props;
-    const {name,price,quantity,description,featured} = product;
+    const categories = ['cpu','graphics card','disks','ram','cpu cooler','psu','case','motherboard','peripheral'];
 
     return (
         <section className="product-inputs">
@@ -27,6 +27,23 @@ const ProductInputs = (props) => {
                 errors.price.map((error,index) => <small className="small--red block" key={index}>{error}</small>)
                 }
             </div>
+            
+            <div className="form__row">
+                <label className="form__label" htmlFor="category">
+                    category:
+                </label>
+                <select name="category" className="form__input" onChange={handleChange}>
+                    {
+                        categories.map(
+                            (category,index) => <option value={category} selected={category === product.category} key={index}>{category}</option>
+                        )
+                    }
+                </select>
+                {
+                errors.category && 
+                errors.category.map((error,index) => <small className="small--red block" key={index}>{error}</small>)
+                }
+            </div>
 
             <div className="form__row">
                 <label className="form__label" htmlFor="quantity">
@@ -42,7 +59,7 @@ const ProductInputs = (props) => {
 
             <div className="form__row">
                 <span className="white">featured :</span>
-                <input type="checkbox" className="ml-1 pointer" onChange={handleChange} 
+                <input type="checkbox" checked={product.featured} className="ml-1 pointer" onChange={handleChange} 
                  placeholder="100" name="featured" id="featured" />
                 <br />
                 {

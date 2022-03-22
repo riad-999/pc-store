@@ -6,7 +6,8 @@ import {
     SET_ALERT,
     SET_AUTH,
     SET_ERROR,
-    SET_USER
+    SET_USER,
+    SET_IS_ADMIN
 } from '../utils/actions';
 import { isOnServer } from '../utils/helpers';
 
@@ -37,6 +38,7 @@ const UIReducer = (state,action) => {
         return {
             ...state,
             isAuth: false,
+            isAdmin: false,
             user: {}
         }
     }
@@ -62,6 +64,12 @@ const UIReducer = (state,action) => {
         return {
             ...state,
             user: action.payload
+        };
+    }
+    if(type === SET_IS_ADMIN){
+        return {
+            ...state,
+            isAdmin: action.payload
         };
     }
     return state;

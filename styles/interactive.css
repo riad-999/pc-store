@@ -46,10 +46,8 @@
   padding: 0.5rem;
 }
 .auth {
+  color: var(--green);
   margin-left: 1rem;
-  font-size: 1.333rem;
-  color: var(--heading-color);
-  padding: 0.5rem;
 }
 .cart__count {
   background-color: var(--green);
@@ -68,8 +66,32 @@
 .hide {
   visibility: hidden;
 }
+.dropdown {
+  position: relative;
+  padding: 1rem;
+}
+.dropdown__list {
+  background-color: var(--heading-color);
+  color: var(--green);
+  width: 120px;
+  padding: 1rem;
+  position: absolute;
+  top: 100%;
+  left: -2rem;
+  visibility: hidden;
+}
+.text--big {
+  font-size: 1.6rem;
+}
+.dropdown:hover .dropdown__list {
+  visibility: visible;
+  z-index: 10;
+}
 @media all and (min-width: 1200px) {
   .sidebar__show {
     display: none;
+  }
+  .auth {
+    margin-left: 0;
   }
 }

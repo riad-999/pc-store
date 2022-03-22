@@ -30,8 +30,12 @@ import TableOrder from './tableOrder';
 import TableProductHeader from './tableProductHeader';
 import TableProduct from './tableProduct';
 import ProductInputs from './productsInputs';
+import PanelProduct from './panelProduct';
+import DropDown from './dropDown';
 
 export {
+    PanelProduct,
+    DropDown,
     Navbar,
     Sidebar,
     Logo,

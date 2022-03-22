@@ -3,31 +3,29 @@ import { FiUserMinus } from "react-icons/fi";
 import { UseUIContext } from "../contexts/UIConttext";
 import { Loading } from ".";
 import Link from "next/link";
-import { useFetch } from "../utils";
-import { authUrl } from "../utils/constants";
-import { useEffect, useState } from "react";
+import {useRouter} from 'next/router';
+import {useState} from 'react';
+import { request } from "../utils";
+import { logoutUrl } from "../utils/constants";
 
 const Auth = () => {
-    const {logout, isAuth, setIsAuth, setUser} = UseUIContext();
-    // const [isAuth,setIsAuth] = useState(null);
-    const {loading,error,data} = useFetch(authUrl,'get');
-    useEffect(() => {
-        if(error){
-            if(error.type === 'network') {
-                //handle network error
-            }
-            else {
-                if(error.response.status === 401) {
-                    setIsAuth(false);
-                }
-            }
-        } 
-        if(data && data.status === 200) {
-            setIsAuth(true);
-            setUser(data.data);
-        }
-    },[data,error]);
+    const router = useRouter();
+    const { isAuth, setIsAuth, setIsAdmin} = UseUIContext();
+    const [loading,setLoading] = useState(false);
 
+    const logout = async () => {
+        setLoading(true);
+        const {success} = await request(logoutUrl,'post');
+        if(success) {
+            setIsAuth(false);
+            setIsAdmin(false);
+        }
+        else {
+            router.push('/error');
+        }
+        setLoading(false);
+        router.push('/');
+    }
     if(loading || isAuth === null) {
         return (
             <button type="button" className="auth">
@@ -40,7 +38,7 @@ const Auth = () => {
             {
             !isAuth ? 
             <Link href="/session/login"><a>Login <FiUserMinus /></a></Link> : 
-            <span onClick={logout}>Logout <FiUserCheck /></span>
+            <button type="button" onClick={logout}>Logout<FiUserCheck /></button>
             }
         </button>
     );

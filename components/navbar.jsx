@@ -2,7 +2,7 @@ import Logo from "./logo";
 import Link from "next/link";
 import { links } from '../utils';
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Auth, CartBtn } from ".";
+import { DropDown, CartBtn } from ".";
 import { UseUIContext } from "../contexts/UIConttext";
 
 const Navbar = () => {
@@ -29,7 +29,7 @@ const Navbar = () => {
                 </button>
                 <div className="navbar__btns">
                     <CartBtn />
-                    <Auth />
+                    <DropDown />
                 </div>
             </nav>
         </header>

@@ -318,6 +318,9 @@ button {
 .red {
   color: var(--red-700);
 }
+.red {
+  color: var(--red-700);
+}
 .inline-block {
   display: inline-block;
 }
@@ -339,6 +342,9 @@ button {
 }
 .pointer {
   cursor: pointer;
+}
+.none {
+  display: none;
 }
 @media screen and (min-width: 1200px) {
   .form {

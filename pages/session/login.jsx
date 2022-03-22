@@ -10,7 +10,7 @@ import { UseUIContext } from "../../contexts/UIConttext";
 import { useRouter } from 'next/router';
 
 const Login = () => {
-    const {authenticate} = UseUIContext();
+    const {setIsAdmin,setIsAuth} = UseUIContext();
     const router = useRouter();
     const initState = {
         email: '',
@@ -45,13 +45,16 @@ const Login = () => {
             });
             setLoading(false);
             setAlert({type: 'success', message: response.data.message, show: true});
-            const {user,email,phone} = response.data;
-            if(!isOnServer())
-                localStorage.setItem('user',JSON.stringify({user,email,phone}));
-            authenticate();
-            router.push('/');
+            setIsAuth(true);
+            if(response.data.isAdmin) {
+                setIsAdmin(true);
+                router.push('/admin');
+            }
+            else {
+                setIsAdmin(false);
+                router.push('/');
+            }
         } catch(error) {
-            console.log(error);
             if(!error.response) {
                 setNetworkErorr(true);
                 setAlert({type: 'error', message: 'Network Error', show: true});

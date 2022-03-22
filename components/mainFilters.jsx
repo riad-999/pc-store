@@ -6,7 +6,7 @@ import { useState } from 'react';
 const MainFilters = () => {
     const [arrowUp,setArrowUp] = useState(true);
     const [show,setShow] = useState(true);
-    const {setSort,products,clearFilters,changeFilters,filters,filters: {price,maxPrice,minPrice}} = useFilterContext();
+    const {setSort,products,clearFilters,changeFilters,sort,filters,filters: {search,price,maxPrice,minPrice}} = useFilterContext();
     const set = new Set(products.map(products => products.category));
     const categories = [...set];
 
@@ -19,7 +19,7 @@ const MainFilters = () => {
         <section className="main-filters">
             <form className="search" onSubmit={e => e.preventDefault()}>
                 <input type="search" name="search" placeholder="Search" 
-                className="search__input" onChange={e => changeFilters('search',e.currentTarget.value)}/>
+                className="search__input" value={search} onChange={e => changeFilters('search',e.currentTarget.value)}/>
                 <button className="btn ml-1" type="button" onClick={toggleArrow}>
                     {
                         arrowUp ? <AiOutlineArrowUp /> : <AiOutlineArrowDown />
@@ -36,6 +36,8 @@ const MainFilters = () => {
                     {   
                         categories.map((category,index) => {
                             const currentCategory = filters.category;
+                            if(!category)
+                                return null;
                             return (
                             <button key={index} type="button" className={currentCategory === category ? `category btn btn--transp selected` : `category btn btn--transp`}
                              onClick={() => changeFilters('category',category)}>
@@ -61,11 +63,11 @@ const MainFilters = () => {
                             sort by:
                         </label>
                         <select onChange={event => setSort(event.currentTarget.value)}>
-                            <option value="score">score</option>
-                            <option value="asc-price">ascending (price)</option>
-                            <option value="desc-price">decending (price)</option>
-                            <option value="A-Z">from A-Z</option>
-                            <option value="Z-A">from Z-A</option>
+                            <option value="score" selected={"score" === sort}>score</option>
+                            <option value="asc-price" selected={"asc-price" === sort}>ascending (price)</option>
+                            <option value="desc-price" selected={"desc-price" === sort}>decending (price)</option>
+                            <option value="A-Z" selected={"A-Z" === sort}>from A-Z</option>
+                            <option value="Z-A" selected={"Z-A" === sort}>from Z-A</option>
                         </select>
                     </div>
 

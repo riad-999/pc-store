@@ -85,6 +85,7 @@ export const reducer = (state,action) => {
         let filteredProducts = [...state.products];
         if(category !== 'all') {
             filteredProducts = filteredProducts.filter(product => product.category === category);
+            console.log('pish');
         }
         if(search) {
             filteredProducts = filteredProducts.filter(product => product.name.includes(search));
