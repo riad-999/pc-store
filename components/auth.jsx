@@ -38,7 +38,7 @@ const Auth = () => {
             {
             !isAuth ? 
             <Link href="/session/login"><a>Login <FiUserMinus /></a></Link> : 
-            <button type="button" onClick={logout}>Logout<FiUserCheck /></button>
+            <span onClick={logout}>Logout<FiUserCheck /></span>
             }
         </button>
     );

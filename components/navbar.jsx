@@ -4,9 +4,10 @@ import { links } from '../utils';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { DropDown, CartBtn } from ".";
 import { UseUIContext } from "../contexts/UIConttext";
+import Auth from "./auth";
 
 const Navbar = () => {
-    const {openSidebar,logout} = UseUIContext();
+    const {openSidebar,isAdmin,isAuth} = UseUIContext();
 
     return (
         <header className="main-header">
@@ -28,8 +29,25 @@ const Navbar = () => {
                     <GiHamburgerMenu />
                 </button>
                 <div className="navbar__btns">
-                    <CartBtn />
-                    <DropDown />
+                    {isAdmin && 
+                    <button className="btn ml-1" type="btn">
+                        <Link href="/orders"><a>admin</a></Link>
+                    </button>
+                    }
+                    {
+                        !isAdmin && <CartBtn />
+                    }
+                    {
+                    isAuth &&
+                    <button className="btn ml-1" type="btn">
+                        {
+                            !isAdmin ? 
+                            <Link href="/account"><a>my Orders</a></Link> : 
+                            <Link href="/orders"><a>orders</a></Link>
+                        }
+                    </button>
+                    }
+                    <Auth />
                 </div>
             </nav>
         </header>

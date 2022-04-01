@@ -10,7 +10,7 @@ import { UseUIContext } from "../../contexts/UIConttext";
 import { useRouter } from 'next/router';
 
 const Login = () => {
-    const {setIsAdmin,setIsAuth} = UseUIContext();
+    const {setIsAdmin,setIsAuth,setUser} = UseUIContext();
     const router = useRouter();
     const initState = {
         email: '',
@@ -46,6 +46,7 @@ const Login = () => {
             setLoading(false);
             setAlert({type: 'success', message: response.data.message, show: true});
             setIsAuth(true);
+            setUser(response.data.user);
             if(response.data.isAdmin) {
                 setIsAdmin(true);
                 router.push('/admin');

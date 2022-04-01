@@ -8,10 +8,11 @@ const Layout = ({children, auth, admin}) => {
     const [err,setErr] = useState(null);
 
     useEffect(() => {
-        if(admin || auth) {
-            if(isAdmin === false || isAuth === false) {
-                setErr(`session expired you need to login ${admin ? 'as admin' : ''}`);
-            }
+        if(isAdmin === false && admin) {
+            setErr(`session expired you need to login as admin`);
+        }
+        if(isAuth === false && auth) {
+            setErr(`session expired you need to login`);
         }
     },[isAdmin,isAuth]);
     if(error) {

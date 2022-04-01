@@ -1,7 +1,7 @@
-const TableProductHeader = () => {
+const TableProductHeader = ({image}) => {
     return (
         <article className="table-product__header">
-            <div>id</div>
+            <div>{image ? "image" : "id" }</div>
             <div>name</div>
             <div>quantity</div>
         </article>

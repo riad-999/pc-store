@@ -43,10 +43,12 @@ const reducer = (state,action) => {
     if(action.type === ALTER_QUANTITY) {
         const {id,flag} = action.payload;
         let num = 0;
+        let diff = 0;
         const newCart = state.cart.map(product => {
             if(product.id === id) {
                 if(flag === 1 && product.quantity < product.max) {
                     num++;
+                    diff += product.price;
                     return {
                         ...product,
                         quantity: product.quantity + 1
@@ -54,6 +56,7 @@ const reducer = (state,action) => {
                 }
                 if(flag === 0 && product.quantity > 1) {
                     num--;
+                    diff -= product.price;
                     return {
                         ...product,
                         quantity: product.quantity - 1
@@ -65,20 +68,24 @@ const reducer = (state,action) => {
         return {
             ...state,
             totalItems: state.totalItems + num,
+            totalAmount: state.totalAmount + diff,
             cart: newCart
         };
     }
     if(action.type === REMOVE_PRODUCT) {
-        quantity = null;
+        let quantity = 0;
+        let amount = 0;
         const newCart = state.cart.filter(product => {
             if(product.id != action.payload)
                 return true;
             quantity = product.quantity;
+            amount = product.price * product.quantity;
             return false;
         });
         return {
             ...state,
             totalItems: state.totalItems - quantity,
+            totalAmount: state.totalAmount - amount,
             cart: newCart
         };
     }

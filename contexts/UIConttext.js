@@ -23,6 +23,7 @@ const initialState = {
     isAuth: null,
     isAdmin: null,
     error: null,
+    user: null,
     alert : {
         type: '',
         message: '',
@@ -75,6 +76,7 @@ export const UIProvider = ({children}) => {
         }
         else {
             setIsAuth(true);
+            setUser(response.data);
             if(response.data.isAdmin) {
                 setIsAdmin(true);
             }
@@ -83,21 +85,6 @@ export const UIProvider = ({children}) => {
             }
         }
     }
-    const logout = async () => {
-        try{
-            setIsAuth(null);
-            setIsAdmin(null);
-            await axios.post(logoutUrl,{},{withCredentials: true});
-            dispatch({type: LOGOUT});
-        } catch(error) {
-            setError({
-                type: 'network error',
-                message: 'netwok error, refresh the page or try later'
-            });
-        }
-        router.push('/session/login');
-    }
-
     //use effects
     useEffect(() => {
         auth();
@@ -110,7 +97,6 @@ export const UIProvider = ({children}) => {
                 openSidebar,
                 closeSidebar,
                 authenticate,
-                logout,
                 setAlert,
                 setError,
                 setIsAuth,

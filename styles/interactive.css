@@ -46,8 +46,9 @@
   padding: 0.5rem;
 }
 .auth {
-  color: var(--green);
-  margin-left: 1rem;
+  color: var(--heading-color);
+  margin-left: 2rem;
+  font-size: 1.2rem;
 }
 .cart__count {
   background-color: var(--green);
@@ -59,6 +60,18 @@
   right: 0.2rem;
   z-index: 10;
   border-radius: 50%;
+}
+.remove {
+  position: absolute;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--heading-color);
+  top: 1rem;
+  right: 1rem;
+}
+.close {
+  visibility: hidden;
+  z-index: -1;
 }
 .cart__remove {
   font-size: 1.3333rem;
@@ -90,8 +103,5 @@
 @media all and (min-width: 1200px) {
   .sidebar__show {
     display: none;
-  }
-  .auth {
-    margin-left: 0;
   }
 }

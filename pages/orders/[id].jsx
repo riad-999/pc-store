@@ -48,9 +48,8 @@ const Order = () => {
             });
             setOrder(response.data);
             setDelivered(response.data.exported);
-            console.log(response.data.exported);
         } catch (error) {
-            handleFailure(response);
+            handleFailure(error.response);
         }
         setLoading(false);
     }
@@ -67,7 +66,7 @@ const Order = () => {
         );
     }
     return (
-        <Layout>
+        <Layout admin={true}>
             <main className="main-content typical-flex">
                 {loading ? <Loading /> : 
                 <>

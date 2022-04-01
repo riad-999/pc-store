@@ -4,16 +4,20 @@ import { productsUrl } from "../../../utils/constants";
 import axios from "axios";
 import { imagesUrl } from "../../../utils/constants";
 import { useState } from "react";
+import { Alert } from "../../../components";
 
 const SingleProduct = ({product}) => {
     const {description,price,name,images,score,sold,comments,total_reviews,quantity} = product;
     let converted = price / 100;
     converted = converted.toFixed(2);
     const [currentImage,setCurrentImage] = useState(images.main);
+    const [alert,setAlert] = useState({type: 'success', message: '', show: false});
+
     return (   
         <>
             <Navbar />
             <Sidebar />
+            <Alert alert={alert} setAlert={setAlert}/>
             <main className="main-content">
                 <section className="single-product">
                     <div className="images">
@@ -57,13 +61,14 @@ const SingleProduct = ({product}) => {
                                 <span className="fixed-width">shippment</span> : 1-4 days
                             </div>
                         </section>
-                        <Count product={product}/>
+                        <Count product={product} setAlert={setAlert} />
                     </div>
                 </section>
                 <section className="reviews">
                     <h3>costumers Reviews</h3>
-                    {
-                        comments.map((comment,index) => <Feedback totalReviews={total_reviews} key={index} comment={comment} />)
+                    {   comments.length ?
+                        comments.map((comment,index) => <Feedback totalReviews={total_reviews} key={index} comment={comment} />) :
+                        <h5>no reviews for this products</h5>
                     }
                 </section>
             </main>

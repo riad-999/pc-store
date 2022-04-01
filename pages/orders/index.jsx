@@ -32,7 +32,7 @@ const Orders = () => {
         );
     }
     return (
-        <Layout>
+        <Layout admin={true}>
             <main className="main-content">
                 {loading ? <Loading /> : 
                 <section className="orders-table">
