@@ -15,8 +15,8 @@ async function editRequest(url,method,data,withCredentials)
     if(method === 'post'){
         response = await axios.post(url,data,{withCredentials,headers});
     }
-    if(method === 'put'){
-        response = await axios.put(url,data,{withCredentials,headers});
+    if(method === 'put' || method === 'patch'){
+        response = await axios.patch(url,data,{withCredentials,headers});
     }
     if(method === 'delete'){
         response = await axios.delete(url,data,{withCredentials,headers});

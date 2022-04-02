@@ -42,7 +42,7 @@ const Checkout = () => {
         });
         const {success,response} = await request(paymentIntentUrl,'post',{IDs});
         if(!success) {
-            handleFailure(response);
+            handleFailure(response,null,router);
         }
         else {
             setClientSecret(response.data.clientSecret);

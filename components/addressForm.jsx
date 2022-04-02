@@ -7,12 +7,9 @@ import { isOnServer } from "../utils/helpers";
 import { useCartContext } from "../contexts/cartContext";
 import { BiErrorCircle } from "react-icons/bi";
 
-const AddressForm = ({setValidAddress}) => {
+const AddressForm = ({setValidAddress,addr,setAddr}) => {
     const {setError, user} = UseUIContext();
     const {cart} = useCartContext();
-    const [address,setAddress] = useState(user.address);
-    const [city,setCity] = useState(user.state);
-    const [zip,setZip] = useState(user.zip);
     const [error,setErr] = useState({});
     const [loading,setLoading] = useState(false);
 
@@ -26,11 +23,7 @@ const AddressForm = ({setValidAddress}) => {
                 message: 'your cart is empty, add pordcut(s) to cart to continue'
             });
         }
-        const {success,response} = await request(checkAddressUrl,'post',{
-            address,
-            state: city,
-            zip
-        });
+        const {success,response} = await request(checkAddressUrl,'post',addr);
 
         if(!response){
             setError({
@@ -41,18 +34,16 @@ const AddressForm = ({setValidAddress}) => {
         if(success){
             // proceed to checkout
             setValidAddress(true);
-            if(!isOnServer()){
-                    localStorage.setItem('address', JSON.stringify({
-                    address,
-                    state: city,
-                    zip
-                }));
-            }
         }
         else {
             setErr({...response.data.errors});            
         }
         setLoading(false);
+    }
+    const handleChange = (e) => {
+        const name = e.currentTarget.name;
+        const value = e.currentTarget.value;
+        setAddr({...addr,[name]: value});
     }
     if(!cart.length){
         return (
@@ -68,7 +59,7 @@ const AddressForm = ({setValidAddress}) => {
             <div className="form__row">
                 <label htmlFor="adress" className="form__label">address:</label>
                 <input id="address" type="text" className="form__input" placeholder="542 w.15th Street" 
-                name="address" value={address} onChange={e => setAddress(e.currentTarget.value)} />
+                name="address" value={addr.address} onChange={handleChange} />
                 {
                 error.address && 
                 error.address.map((error,index) => <small className="small--red block" key={index}>{error}</small>)
@@ -79,7 +70,7 @@ const AddressForm = ({setValidAddress}) => {
                 <div className="form__row child-60">
                     <label className="form__label" htmlFor="state">state:</label>
                     <input id="state" type="text" className="form__input" placeholder="algiers" 
-                    name="State" value={city} onChange={e => setCity(e.currentTarget.value)} />
+                    name="state" value={addr.state} onChange={handleChange} />
                     {
                     error.state && 
                     error.state.map((error,index) => <small className="small--red block" key={index}>{error}</small>)
@@ -89,7 +80,7 @@ const AddressForm = ({setValidAddress}) => {
                 <div className="form__row child-40">
                     <label htmlFor="zip" className="form__label">zip code:</label>
                     <input id="zip" type="text" className="form__input" placeholder="16000" 
-                    name="zipCode" value={zip} onChange={e => setZip(e.currentTarget.value)} />
+                    name="zip" value={addr.zip} onChange={handleChange} />
                     {
                         error.zip && 
                         error.zip.map((error,index) => <small className="small--red block" key={index}>{error}</small>)

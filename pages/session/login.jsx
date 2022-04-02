@@ -94,6 +94,12 @@ const Login = () => {
                 <div className="small center">
                     you do not have an acount ?, <Link href="/session/register"><a className="green">register here</a></Link>
                 </div>
+                <div className="center">
+                    normal user: (normal@gmail.com,  normal)
+                </div>
+                <div className="center">
+                    admin: (admin@gamil.com,   admin)
+                </div>
                 <form className="form" onSubmit={handleSubmit}>
                     <div className="form__row">
                         <label className="form__label" htmlFor="email">

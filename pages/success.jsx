@@ -8,11 +8,11 @@ import { PublicStripeKey } from "../utils/constants";
 import {useState, useEffect} from 'react';
 import { handleOrderUrl } from "../utils/constants";
 import { request } from "../utils";
-import { UseUIContext } from "../contexts/UIConttext";
+import { useCartContext } from "../contexts/cartContext";
 
 const Succeed = () => {
     const stripe = useStripe();
-    const {clearCart} = UseUIContext();
+    const {clearCart} = useCartContext();
     const [message, setMessage] = useState(null);
     const [loading,setLoading] = useState(false);
 

@@ -6,12 +6,13 @@ import {
 
 import {useRouter} from 'next/router';
 import { request } from "../utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCartContext } from "../contexts/cartContext";
 import { sessionStore } from "../utils/constants";
 import { AddressForm, ShowBill } from ".";
 import { sessionDestroy } from "../utils/constants";
 import { handleFailure } from "../utils/helpers";
+import { UseUIContext } from "../contexts/UIConttext";
 
 
 const CheckoutForm = () => {
@@ -22,8 +23,34 @@ const CheckoutForm = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage,setErrorMessage] = useState('');
 
+    const {user:{address,zip,state}} = UseUIContext();
     const [validAdress,setValidAddress] = useState(false); 
+    const [addr,setAddr] = useState({address,zip,state});
+    const [invalidQuantity,setInvalidQuantity] = useState(false);
     const {cart} = useCartContext();
+
+    // const test = async () => {
+    //     const items = cart.map(item => {
+    //         const {id,price,quantity,name} = item;
+    //         return {
+    //             id,price,quantity,name
+    //         };
+    //     });
+    //     const {success,response} = await request(sessionStore,'post',{
+    //         items,
+    //         name: 'order',
+    //         address: {
+    //             state: addr.state,
+    //             address: addr.address,
+    //             zip: addr.zip
+    //         }
+    //     });
+    //     console.log(response);
+    // }
+
+    // useEffect(() => {
+    //     test();
+    // },[]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -45,46 +72,57 @@ const CheckoutForm = () => {
 
         const {success,response} = await request(sessionStore,'post',{
             items,
-            name: 'order',
             address: {
-                state: 'alger',
-                address: 'cite 49 logs bt02 n08',
-                zip: 16064
+                state: addr.state,
+                address: addr.address,
+                zip: addr.zip
             }
         });
         if(!success) {
             handleFailure(response,null,router);
         }
-        const { error } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-            // Make sure to change this to your payment completion page
-            return_url: "http://localhost:3000/success",
-        },
-        });
-
-        // This point will only be reached if there is an immediate error when
-        // confirming the payment. Otherwise, your customer will be redirected to
-        // your `return_url`. For some payment methods like iDEAL, your customer will
-        // be redirected to an intermediate site first to authorize the payment, then
-        // redirected to the `return_url`.
-
-        // in case of an immediate error un cancel the order in the database.
-
-        // await request(cancelOrderUrl,'delete',{id});
-        
-        if (error.type === "card_error" || error.type === "validation_error") {
-            setErrorMessage(error.message);
-        } else {
-            setErrorMessage("An unexpected error occured.");
+        else {
+            if(response.data.invalid) {
+                setInvalidQuantity(response.data.messages);
+            }
+            else {
+                const { error } = await stripe.confirmPayment({
+                elements,
+                confirmParams: {
+                    // Make sure to change this to your payment completion page
+                    return_url: "http://localhost:3000/success",
+                },
+                });
+                // This point will only be reached if there is an immediate error when
+                // confirming the payment. Otherwise, your customer will be redirected to
+                // your `return_url`. For some payment methods like iDEAL, your customer will
+                // be redirected to an intermediate site first to authorize the payment, then
+                // redirected to the `return_url`.
+                if (error.type === "card_error" || error.type === "validation_error") {
+                    setErrorMessage(error.message);
+                } else {
+                    setErrorMessage("An unexpected error occured.");
+                }
+                await request(sessionDestroy,'delete',{name: 'order'});
+                setIsLoading(false);
+            }
         }
-        await request(sessionDestroy,'delete',{name: 'order'});
-        setIsLoading(false);
     };
     
     if(!validAdress){
         return (
-            <AddressForm setValidAddress={setValidAddress}/>
+            <AddressForm addr={addr} setAddr={setAddr} setValidAddress={setValidAddress}/>
+        );
+    }
+    if(invalidQuantity) {
+        return (
+            <section>
+                <h4>sorry, some products aren't availabe:</h4>
+                {
+                    invalidQuantity.map((message,index) => <h5 className="green" key={index}>{message}</h5>)
+                }
+                <p>you need to alter your cart in order to continue the payment</p>
+            </section>
         );
     }
     return (
