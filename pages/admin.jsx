@@ -22,7 +22,7 @@ const Admin = () => {
                     <h4>update existing products</h4>
                     <Link href="/products/panel" passHref>
                         <button type="button" className='btn btn--center'>
-                            <a>Update</a>
+                            <a>edit or archive</a>
                         </button>
                     </Link>
                 </article>

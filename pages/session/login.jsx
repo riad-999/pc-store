@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 const Login = () => {
     const {setIsAdmin,setIsAuth,setUser} = UseUIContext();
     const router = useRouter();
+    const redirected = router.query.alert;
     const initState = {
         email: '',
         password: ''
@@ -101,6 +102,7 @@ const Login = () => {
                     admin: (admin@gamil.com,   admin)
                 </div>
                 <form className="form" onSubmit={handleSubmit}>
+                    {redirected && <div className="red center">you need to login to continue</div>}
                     <div className="form__row">
                         <label className="form__label" htmlFor="email">
                             email:

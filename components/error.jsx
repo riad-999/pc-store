@@ -10,7 +10,7 @@ const Error = ({message}) => {
             <Sidebar />
             <main className="main-content mt-5 center">
                 <h2><BiErrorCircle /></h2>
-                <h4>{ message ? message : 'error occurred'}</h4>
+                <h4>{ message ? message : 'network error refresh the page or try later'}</h4>
             </main>
         </>
     );

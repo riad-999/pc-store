@@ -127,6 +127,9 @@ const CheckoutForm = () => {
     }
     return (
         <form id="payment-form" className="stripe-form" onSubmit={handleSubmit}>
+            <div className="green">test number: 4242 4242 4242 4242</div>
+            <div className="green">expiration: anything after current date</div>
+            <div className="green mb-1">CVC: anything (3 digits)</div>
             <PaymentElement id="payment-element" />
             <ShowBill />
 
