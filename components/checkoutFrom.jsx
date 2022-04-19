@@ -117,7 +117,7 @@ const CheckoutForm = () => {
     if(invalidQuantity) {
         return (
             <section>
-                <h4>sorry, some products aren't availabe:</h4>
+                <h4>sorry, some products are not availabe:</h4>
                 {
                     invalidQuantity.map((message,index) => <h5 className="green" key={index}>{message}</h5>)
                 }
