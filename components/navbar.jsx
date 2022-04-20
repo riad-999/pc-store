@@ -31,7 +31,7 @@ const Navbar = () => {
                 <div className="navbar__btns">
                     {isAdmin && 
                     <button className="btn ml-1" type="btn">
-                        <Link href="/orders"><a>admin</a></Link>
+                        <Link href="/admin"><a>admin</a></Link>
                     </button>
                     }
                     {

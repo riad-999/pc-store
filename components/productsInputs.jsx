@@ -35,7 +35,7 @@ const ProductInputs = (props) => {
                 <select name="category" className="form__input" onChange={handleChange}>
                     {
                         categories.map(
-                            (category,index) => <option value={category} selected={category === product.category} key={index}>{category}</option>
+                            (category,index) => <option value={category} defaultValue={category} key={index}>{category}</option>
                         )
                     }
                 </select>
