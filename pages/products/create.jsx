@@ -103,7 +103,7 @@ const Create = () => {
         // const {success,response} = await request(createProductUrl,'post',{
         //     ...productInputs,
         // });
-        const {success,response} = await request(storeSessionUrl,'post',productInputs);
+        const {success,response} = await request(storeSessionUrl,'post',productInputs,true,true);
         if(success) {
             // const id = response.data.id;
             // const {success: succ,response: res} = await request(`${createProductUrl}-images?id=${id}`,'post',formData);

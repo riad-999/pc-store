@@ -72,7 +72,6 @@ const Edit = () => {
     }
     const handleFailure = (response) => {
         if(response) {
-            console.log(response);
             if(response.status === 422) {
                 setInputsError({...response.data.errors});
             }
@@ -88,12 +87,12 @@ const Edit = () => {
         }
     }
     const handleSubmit = async (e) => {
-        console.log(productInputs);
         e.preventDefault();
         setLoading(true);
         setMessage(null);
         setInputsError({...errorsInitSate});
         const formData = new FormData();
+        // formData.append('main',productInputs.mainImage[0]);
         if(productInputs.mainImage) {
             formData.append('main',productInputs.mainImage[0]);
         }
@@ -108,14 +107,16 @@ const Edit = () => {
         const {success,response} = await request(storeSessionUrl,'post',productInputs);
         if(success) {
             const id = router.query.id;
-            const {success: succ,response: res} = await request(`${updateProductUrl}/${id}`,'put',formData);
+            // we are using post instead of patch because patch does not support form data
+            const {success: succ,response: res} = await request(`${updateProductUrl}/${id}`,'post',formData,true,true);
             if(succ) {
                 setMessage({type: 'green', content: 'product updated'});
             }
             else {
-                if(res && res.status === 422) {
-                    setMessage({type: 'red', content: 'make sure to select a valid image, and it should be less than 4MB'});
+                if(res && (res.status === 422 || res.status == 413)) {
+                    setMessage({type: 'red', content: 'make sure to select a valid images,and they should be less than 8MB'});
                 }
+                
                 else {
                     handleFailure(res);
                 }        
@@ -138,7 +139,7 @@ const Edit = () => {
             const product = response.data.data;
             const {name,category,price,quantity,description,featured,images} = product;
             setProductInputs({
-                name,category,description,quantity,price,featured,mainImage: {},otherImages: {}
+                name,category,description,quantity,price,featured,mainImage:{},otherImages:{}
             });
             mainImage.current.src = `${imagesUrl}/${product.images.main}`;
             images.others.forEach((image,index) => {
@@ -155,6 +156,11 @@ const Edit = () => {
             getProduct();
         }
     },[router.isReady,isAdmin]);
+
+    useEffect(() => {
+        console.log('main');
+        console.log(productInputs.mainImage);
+    },[productInputs.mainImage]);
 
     if(error){
         return (

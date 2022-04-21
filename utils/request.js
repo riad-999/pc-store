@@ -3,20 +3,21 @@ import {csrfUrl} from '../utils/constants';
 import {isOnServer} from '../utils/helpers';
 
 const headers = {
-        Accept: 'application/json'
+    Accept: 'application/json'
 };
 
-async function editRequest(url,method,data,withCredentials)
+async function editRequest(url,method,data,withCredentials,formdata)
 {
     if(!isOnServer() && document.cookie.indexOf('XSRF-TOKEN='))
         await axios.get(csrfUrl,{withCredentials: true,headers});
     let response = null;
-
+    if(formdata)
+        headers.ContentType = 'multipart/form-data';
     if(method === 'post'){
         response = await axios.post(url,data,{withCredentials,headers});
     }
-    if(method === 'put'){
-        response = await axios.put(url,data,{withCredentials,headers});
+    if(method === 'put' || method === 'patch'){
+        response = await axios.patch(url,data,{withCredentials,headers});
     }
     if(method === 'delete'){
         response = await axios.delete(url,data,{withCredentials,headers});
@@ -26,7 +27,7 @@ async function editRequest(url,method,data,withCredentials)
         response
     };
 }
-async function request(url,method='get',data={},withCredentials=true)
+async function request(url,method='get',data={},withCredentials=true,formdata=false)
 {
     try {
         if(method === 'get') {
