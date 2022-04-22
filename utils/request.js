@@ -8,8 +8,14 @@ const headers = {
 
 async function editRequest(url,method,data,withCredentials,formdata)
 {
-    if(!isOnServer() && document.cookie.indexOf('XSRF-TOKEN='))
-        await axios.get(csrfUrl,{withCredentials: true,headers});
+    if(!isOnServer() && document.cookie.indexOf('XSRF-TOKEN=')){
+        const response = await axios.get(csrfUrl,{withCredentials: true,headers});
+        if(response.status !== 200)
+            return {
+                success: false,
+                response: null
+            };
+    }
     let response = null;
     if(formdata)
         headers.ContentType = 'multipart/form-data';

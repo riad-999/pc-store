@@ -3,7 +3,7 @@ import { Navbar, Sidebar } from "../../components";
 import { useState } from "react";
 import { Loading } from "../../components";
 import { Alert } from "../../components";
-import { loginUrl } from "../../utils/constants";
+import { loginUrl, csrfUrl } from "../../utils/constants";
 import { isOnServer } from "../../utils/helpers";
 import axios from "axios";
 import { UseUIContext } from "../../contexts/UIConttext";
@@ -31,13 +31,12 @@ const Login = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setError({...initState});
-        const url = 'http://localhost:8000/sanctum/csrf-cookie';
         let response = null;
         setLoading(true);
         
         try {
             if(!isOnServer() && document.cookie.indexOf('XSRF-TOKEN='))
-                await axios.get(url,{withCredentials: true});
+                await axios.get(csrfUrl,{withCredentials: true});
             response = await axios.post(loginUrl,state,{
                 headers : {
                     Accept : 'application/json'
