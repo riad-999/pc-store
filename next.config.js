@@ -3,7 +3,4 @@ module.exports = {
   images: {
     domains: ['localhost','res.cloudinary.com']
   },
-  cookies: {
-    domains: ['intense-badlands-27342.herokuapp.com']
-  }
 }
