@@ -47,7 +47,7 @@ const Navbar = () => {
                         }
                     </button>
                     }
-                    <Auth />
+                    {/* <Auth /> */}
                 </div>
             </nav>
         </header>
