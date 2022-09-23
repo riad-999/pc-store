@@ -61,7 +61,7 @@ const SingleProduct = ({product}) => {
                                 <span className="fixed-width">shippment</span> : 1-4 days
                             </div>
                         </section>
-                        <Count product={product} setAlert={setAlert} />
+                        {/* <Count product={product} setAlert={setAlert} /> */}
                     </div>
                 </section>
                 {/* <section className="reviews">

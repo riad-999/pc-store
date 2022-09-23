@@ -28,7 +28,7 @@ const Navbar = () => {
                 <button type="button" className="sidebar__show" onClick={openSidebar}>
                     <GiHamburgerMenu />
                 </button>
-                <div className="navbar__btns">
+                {/* <div className="navbar__btns">
                     {isAdmin && 
                     <button className="btn ml-1" type="btn">
                         <Link href="/admin"><a>admin</a></Link>
@@ -47,8 +47,8 @@ const Navbar = () => {
                         }
                     </button>
                     }
-                    {/* <Auth /> */}
-                </div>
+                    <Auth />
+                </div> */}
             </nav>
         </header>
     );
