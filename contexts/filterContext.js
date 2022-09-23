@@ -14,7 +14,7 @@ const initialState = {
     products : [],
     filteredProducts: [],
     view: '',
-    sort: 'score',
+    sort: 'asc-price',
     filters: {
         search: '',
         category: 'all',

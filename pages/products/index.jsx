@@ -1,11 +1,11 @@
-import { Footer, MainFilters, Navbar, Sidebar, ProductsSection, BackTotopBtn } from "../../components";
+import { Footer, MainFilters, Navbar, Sidebar, ProductsSection, BackTotopBtn, Loading } from "../../components";
 import { productsUrl } from "../../utils/constants";
 import axios from "axios";
 import { useFilterContext } from "../../contexts/filterContext";
 import { useEffect } from "react";
 
 const Products = ({products}) => {
-    const {setProducts,filteredProducts} = useFilterContext();
+    const {setProducts,filteredProducts, products: allProducts} = useFilterContext();
     useEffect(() => {
         setProducts(products);
     },[]);
@@ -16,11 +16,12 @@ const Products = ({products}) => {
             <main className="main-content">
                 <MainFilters />
                 {
-                    !filteredProducts.length ? 
+                    !filteredProducts.length && !allProducts.length ? 
+                    <Loading /> :  (!filteredProducts.length && allProducts.length ? 
                     <div className="center mt-5">
                         <h4>sorry, No matching products for your filters.</h4>
                     </div> : 
-                    <ProductsSection products={filteredProducts}/>
+                    <ProductsSection products={filteredProducts}/>)
                 }
             </main>
             <BackTotopBtn />

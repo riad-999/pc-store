@@ -63,7 +63,7 @@ const MainFilters = () => {
                             sort by:
                         </label>
                         <select onChange={event => setSort(event.currentTarget.value)}>
-                            <option value="score" selected={"score" === sort}>score</option>
+                            {/* <option value="score" selected={"score" === sort}>score</option> */}
                             <option value="asc-price" selected={"asc-price" === sort}>ascending (price)</option>
                             <option value="desc-price" selected={"desc-price" === sort}>decending (price)</option>
                             <option value="A-Z" selected={"A-Z" === sort}>from A-Z</option>
