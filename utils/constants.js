@@ -16,7 +16,7 @@ const links = [
     }
 ];
 const apiEndPoint = 'https://pc-store-api.riadfelih.com/api/';
-const apiEndPoint2 = 'hhttps://intense-badlands-27342.herokuapp.com/api/';
+const apiEndPoint2 = 'https://intense-badlands-27342.herokuapp.com/api/';
 const productsUrl = apiEndPoint2 + 'products';
 const featuredProductsUrl = apiEndPoint2 + 'featuredproducts';
 const resgisterUrl = apiEndPoint2 + 'register';
