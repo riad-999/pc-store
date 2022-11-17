@@ -42,9 +42,9 @@ const SingleProduct = ({product}) => {
                     <div className="single-product__info">
                         <section className="desc">
                             <h3>{name}</h3>
-                            {/* <div className="single-product__review">
+                            <div className="single-product__review">
                                 <Review score={score} totalReviews={total_reviews}/>
-                            </div> */}
+                            </div>
                             <div className="single-product__price green">
                                 ${converted}
                             </div>
@@ -61,16 +61,16 @@ const SingleProduct = ({product}) => {
                                 <span className="fixed-width">shippment</span> : 1-4 days
                             </div>
                         </section>
-                        {/* <Count product={product} setAlert={setAlert} /> */}
+                        <Count product={product} setAlert={setAlert} />
                     </div>
                 </section>
-                {/* <section className="reviews">
+                <section className="reviews">
                     <h3>costumers Reviews</h3>
                     {   comments.length ?
                         comments.map((comment,index) => <Feedback totalReviews={total_reviews} key={index} comment={comment} />) :
                         <h5>no reviews for this products</h5>
                     }
-                </section> */}
+                </section>
             </main>
 
         </>
