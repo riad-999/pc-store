@@ -29,15 +29,15 @@ const Sidebar = () => {
                     );
                 })}
             </ul>
-            <div className="sidebar__btns">
+            {/* <div className="sidebar__btns">
                 <CartBtn />
-                <Auth />
+                <Auth /> 
                 <button className="ml-1 green">
                     {isAdmin ? 
                     <Link href="/admin"><a>administration</a></Link>: 
                     <Link href="/account"><a>account</a></Link>}
                 </button>
-            </div>
+            </div> */}
         </aside>
     );
 }
