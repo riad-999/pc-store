@@ -15,8 +15,8 @@ const links = [
     path : '/products'
     }
 ];
-const apiEndPoint = 'https://pc-store-api.riadfelih.com/api/';
-const apiEndPoint2 = 'https://intense-badlands-27342.herokuapp.com/api/';
+const apiEndPoint2 = 'https://pc-store-api.riadfelih.com/api/';
+const apiEndPoint = 'https://intense-badlands-27342.herokuapp.com/api/';
 const productsUrl = apiEndPoint + 'products';
 const featuredProductsUrl = apiEndPoint + 'featuredproducts';
 const resgisterUrl = apiEndPoint + 'register';
@@ -29,7 +29,7 @@ export const paymentIntentUrl = apiEndPoint + 'createPaymentIntent';
 export const handleOrderUrl = apiEndPoint + 'orders/store';
 export const cancelOrderUrl = apiEndPoint + 'cancelOrder';
 export const checkAddressUrl = apiEndPoint + 'checkAddress';
-export const csrfUrl = 'https://pc-store-api.riadfelih.com/sanctum/csrf-cookie';
+export const csrfUrl = 'https://intense-badlands-27342.herokuapp.com/sanctum/csrf-cookie';
 export const ordersUrl = apiEndPoint + 'orders';
 export const productReviewUrl = apiEndPoint + 'productReview';
 export const createProductUrl = apiEndPoint + 'products/store';
