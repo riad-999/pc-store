@@ -18,7 +18,7 @@ const ProductCard = ({product}) => {
                 </Link>
             </div>
             <div className="product__info">
-                {/* <Review score={score} totalReviews={total_reviews} /> */}
+                <Review score={score} totalReviews={total_reviews} />
                 <h4>{name}</h4>
                 <p className="product__desc">
                     {`${description.substring(0,70)}...`}
