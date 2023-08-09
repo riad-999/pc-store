@@ -29,7 +29,7 @@ const Sidebar = () => {
                     );
                 })}
             </ul>
-            {/* <div className="sidebar__btns">
+            <div className="sidebar__btns">
                 <CartBtn />
                 <Auth /> 
                 <button className="ml-1 green">
@@ -37,7 +37,7 @@ const Sidebar = () => {
                     <Link href="/admin"><a>administration</a></Link>: 
                     <Link href="/account"><a>account</a></Link>}
                 </button>
-            </div> */}
+            </div>
         </aside>
     );
 }

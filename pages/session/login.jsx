@@ -97,11 +97,11 @@ const Login = () => {
                 <div className="center">
                     normal user: (normal@gmail.com,  normal)
                 </div>
-                <div className="center">
+                {/* <div className="center">
                     admin: (admin@gamil.com,   admin)
-                </div>
+                </div> */}
                 <form className="form" onSubmit={handleSubmit}>
-                    {redirected && <div className="red center">you need to login to continue</div>}
+                    {redirected && <div className="red center">you need to login to continue to the checkout</div>}
                     <div className="form__row">
                         <label className="form__label" htmlFor="email">
                             email:

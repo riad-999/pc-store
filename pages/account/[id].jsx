@@ -98,8 +98,12 @@ const Order = () => {
                                     </div>
                                     <div>{name}</div>
                                     <div>{quantity}x <span className="green">${toPrice(price)}</span>
-                                        <small className="ml-1 btn" 
+                                        {/* <small className="ml-1 btn" 
                                         onClick={ review ? null : (e) => feedback(e,id)}>
+                                            {review ? <>{review} <AiFillStar /> </> : 'feedback'}
+                                        </small> */}
+                                        <small className="ml-1 btn" 
+                                        onClick={(e) => feedback(e,id)}>
                                             {review ? <>{review} <AiFillStar /> </> : 'feedback'}
                                         </small>
                                     </div>
